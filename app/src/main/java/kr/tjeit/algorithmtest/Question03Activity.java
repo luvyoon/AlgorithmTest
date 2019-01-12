@@ -59,9 +59,9 @@ public class Question03Activity extends BaseActivity {
 
                 String gugudanStr = " ";
 
-                for (int i = 1 ; i < 10 ; i ++){
+                for (int i = 1; i < 10; i++) {
 
-                    gugudanStr += String.format( "%d * %d = %d\n" , dan ,i, dan*i);
+                    gugudanStr += String.format("%d * %d = %d\n", dan, i, dan * i);
 
                 }
 
@@ -80,6 +80,31 @@ public class Question03Activity extends BaseActivity {
         eightBtn.setOnClickListener(guguListener);
         nineBtn.setOnClickListener(guguListener);
 
+        totalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                결과로 가공해서 resultTxt 의 재료로 사용
+                String resultStr = " ";
+
+//                2*1=2
+//                9*9 = 81 까지 되게
+
+                for (int i = 2; i <= 9; i++) {
+
+
+                    for (int j = 1; i <= 9; j++) {
+
+                        resultStr += String.format("%d *%d = %d\n", i, j, i * j);
+
+                    }
+
+                }
+
+                resultTxt.setText(resultStr);
+
+            }
+        });
 
 
     }
