@@ -7,7 +7,18 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import kr.tjeit.algorithmtest.datas.Chat;
+
 public class Question05Activity extends BaseActivity {
+
+//    굳이<Chat> 을 명시하는이유?
+//    자바 1.8로 오면서 안써도 되게 업데이트
+//    올드버젼을 쓰는 경우 대비
+
+    List<Chat> chatList = new ArrayList<Chat>();
 
     //    컴퓨터가 출제한 문제(3자리 숫자가 저장됨)
     int[] questionIntArray = new int[3];
@@ -70,6 +81,13 @@ public class Question05Activity extends BaseActivity {
 
         String inputStr = numInputEdt.getText().toString();
 
+//        입력한 값을 채팅처럼 메세지로 출력. =>chatlist추가
+
+        Chat inputNumChat = new Chat("user", inputStr);
+        chatList.add(inputNumChat);
+//     notifychanged 필요함
+
+
 //        배열에 각 자리의 숫자를 집어넣기.
 
 //        먼저 String을 숫자로 변경
@@ -124,13 +142,26 @@ public class Question05Activity extends BaseActivity {
 
         }
 
-        String temp = String.format("%d S %d B 입니다", strikeCount, ballCount);
-        Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
-        
+        String replyMessage = String.format("%d S %d B 입니다", strikeCount, ballCount);
+//        Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
+
+        Chat reply = new Chat("computer", replyMessage);
+        chatList.add(reply);
+
+
         if (strikeCount == 3) {
 
-            Toast.makeText(mContext, "정답 입니다!", Toast.LENGTH_SHORT).show();
-            Toast.makeText(mContext, userTryCount+ "번 만에 맞췄습니다.", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "정답 입니다!", Toast.LENGTH_SHORT).show();
+
+            Chat correct = new Chat("computer", "정답입니다 !");
+            chatList.add(correct);
+
+
+//            Toast.makeText(mContext, userTryCount+ "번 만에 맞췄습니다.", Toast.LENGTH_SHORT).show();
+
+            Chat countMessage = new Chat("computer", userTryCount + "번 만에 맞췄습니다.");
+            chatList.add(countMessage);
+
         }
 
 
