@@ -168,7 +168,6 @@ public class Question04Activity extends BaseActivity {
                 } else  if (operator.equals("divide")){
 
                     currentNumber =prevNumber / currentNumber ;
-
                 }
 
                 midtermTxt.setText( " ");
