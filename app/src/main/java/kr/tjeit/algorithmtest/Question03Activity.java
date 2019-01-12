@@ -24,6 +24,10 @@ public class Question03Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question03);
 
+        bindViews();
+        setupEvents();
+        setValues();
+
     }
 
     @Override
