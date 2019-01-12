@@ -9,12 +9,12 @@ public class MainActivity extends BaseActivity {
 
     private android.widget.Button questionBtn;
     private Button question2Btn;
+    private Button question3Btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         bindViews();
@@ -25,11 +25,23 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setupEvents() {
 
+
+        question3Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(mContext, Question03Activity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         question2Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent= new Intent(mContext,Question02Activity.class);
+                Intent intent = new Intent(mContext, Question02Activity.class);
                 startActivity(intent);
             }
         });
@@ -52,6 +64,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void bindViews() {
+        this.question3Btn = (Button) findViewById(R.id.question3Btn);
         this.question2Btn = (Button) findViewById(R.id.question2Btn);
         this.questionBtn = (Button) findViewById(R.id.questionBtn);
 
