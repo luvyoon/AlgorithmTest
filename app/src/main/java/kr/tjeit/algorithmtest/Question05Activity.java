@@ -1,6 +1,7 @@
 package kr.tjeit.algorithmtest;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.tjeit.algorithmtest.adapters.ChatAdapter;
 import kr.tjeit.algorithmtest.datas.Chat;
 
 public class Question05Activity extends BaseActivity {
@@ -19,6 +21,8 @@ public class Question05Activity extends BaseActivity {
 //    올드버젼을 쓰는 경우 대비
 
     List<Chat> chatList = new ArrayList<Chat>();
+
+    ChatAdapter mChatAdapter;
 
     //    컴퓨터가 출제한 문제(3자리 숫자가 저장됨)
     int[] questionIntArray = new int[3];
@@ -85,7 +89,9 @@ public class Question05Activity extends BaseActivity {
 
         Chat inputNumChat = new Chat("user", inputStr);
         chatList.add(inputNumChat);
+        mChatAdapter.notifyDataSetChanged();
 //     notifychanged 필요함
+
 
 
 //        배열에 각 자리의 숫자를 집어넣기.
@@ -142,25 +148,54 @@ public class Question05Activity extends BaseActivity {
 
         }
 
-        String replyMessage = String.format("%d S %d B 입니다", strikeCount, ballCount);
+       final String replyMessage = String.format("%d S %d B 입니다", strikeCount, ballCount);
 //        Toast.makeText(mContext, temp, Toast.LENGTH_SHORT).show();
 
-        Chat reply = new Chat("computer", replyMessage);
-        chatList.add(reply);
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Chat reply = new Chat("computer", replyMessage);
+                chatList.add(reply);
+                mChatAdapter.notifyDataSetChanged();
+                chatListView.smoothScrollToPosition(chatList.size()-1);
+            }
+        },500);
+
 
 
         if (strikeCount == 3) {
 
 //            Toast.makeText(mContext, "정답 입니다!", Toast.LENGTH_SHORT).show();
 
-            Chat correct = new Chat("computer", "정답입니다 !");
-            chatList.add(correct);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Chat correct = new Chat("computer", "정답입니다 !");
+                    chatList.add(correct);
+                    mChatAdapter.notifyDataSetChanged();
+
+
+                }
+            },700);
+
 
 
 //            Toast.makeText(mContext, userTryCount+ "번 만에 맞췄습니다.", Toast.LENGTH_SHORT).show();
 
-            Chat countMessage = new Chat("computer", userTryCount + "번 만에 맞췄습니다.");
-            chatList.add(countMessage);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    Chat countMessage = new Chat("computer", userTryCount + "번 만에 맞췄습니다.");
+                    chatList.add(countMessage);
+                    mChatAdapter.notifyDataSetChanged();
+                }
+            },1000);
+
+
 
         }
 
@@ -169,6 +204,9 @@ public class Question05Activity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+        mChatAdapter = new ChatAdapter(mContext,chatList);
+        chatListView.setAdapter(mChatAdapter);
 
 //        화면을 켜면 컴퓨터가 바로 문제를 출제
         makeQuestionNumbers();

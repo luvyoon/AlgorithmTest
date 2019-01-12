@@ -59,7 +59,7 @@ public class ChatAdapter extends ArrayAdapter<Chat> {
             computerMsgLayout.setVisibility(View.GONE);
             userMsgLayout.setVisibility(View.VISIBLE);
 
-            userMsgTxt.setText(data.getSender());
+            userMsgTxt.setText(data.getMessage());
 
 
 
@@ -69,7 +69,7 @@ public class ChatAdapter extends ArrayAdapter<Chat> {
             userMsgLayout.setVisibility(View.GONE);
             computerMsgLayout.setVisibility(View.VISIBLE);
 
-            computerMsgTxt.setText(data.getSender());
+            computerMsgTxt.setText(data.getMessage());
 
 
         }

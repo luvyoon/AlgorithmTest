@@ -19,4 +19,12 @@ public class Chat implements Serializable {
     public void setSender(String sender) {
         this.sender = sender;
     }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
