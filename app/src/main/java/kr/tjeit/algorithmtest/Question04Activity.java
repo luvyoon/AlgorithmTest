@@ -9,6 +9,11 @@ public class Question04Activity extends BaseActivity {
 
     long currentNumber = 0;
 
+
+    long prevNumber =0;
+
+    String operator = " ";
+
     private android.widget.TextView resultTxt;
     private android.widget.Button oneBtn;
     private android.widget.Button twoBtn;
@@ -20,6 +25,12 @@ public class Question04Activity extends BaseActivity {
     private android.widget.Button eightBtn;
     private android.widget.Button nineBtn;
     private android.widget.Button clearBtn;
+    private TextView midtermTxt;
+    private Button plusBtn;
+    private Button minusBtn;
+    private Button multiplyBtn;
+    private Button divideBtn;
+    private Button calculateBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +61,10 @@ public class Question04Activity extends BaseActivity {
 
                 currentNumber = currentNumber * 10 + clickedNum;
 
-                resultTxt.setText(String.valueOf(clickedNum));
+                resultTxt.setText(String.valueOf(currentNumber));
+
+
+
 
             }
         };
@@ -72,18 +86,103 @@ public class Question04Activity extends BaseActivity {
 
 //                 초기화 버튼이 눌리면 , 현재 입력된 숫자를 0으로 변환
 
-                 currentNumber = 0;
+                currentNumber = 0;
 
 //                 화면도 초기 입력상태로 변경.
 
                 resultTxt.setText("버튼을 눌러 숫자 입력");
 
 
-
-
             }
         });
 
+
+        View.OnClickListener operatorClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                연산자가 눌리면 할일
+//           1. 지금까지 입력한 숫자를 이전 숫자로 백업.
+//                 + 현재입력값을 초기화
+
+
+
+//                연사자가 있는 상태에서는 현재 입력값을 이전값으로 넘기지 말자
+
+
+                if (operator.equals(" ")){
+                    prevNumber = currentNumber;
+
+                }
+
+
+//                만약에 기존에 연산자가 지정된 상태라면
+//                다시 연산자를 누른다는건 => 연산 종류만 변경 => 초기화 X
+                currentNumber = 0 ;
+
+
+
+//                2. 눌린 연산의 종류를 기억
+
+                String clickedOperator = v.getTag().toString();
+                operator = clickedOperator;
+
+
+//                3. 중간과정 텍스트뷰에 이전값과 연산자를 표기 .
+
+                String midtermStr = String.format("%d %s", prevNumber, operator);
+                midtermTxt.setText(midtermStr);
+
+
+
+
+            }
+        };
+
+
+        plusBtn.setOnClickListener(operatorClickListener);
+        minusBtn.setOnClickListener(operatorClickListener);
+        multiplyBtn.setOnClickListener(operatorClickListener);
+        divideBtn.setOnClickListener(operatorClickListener);
+
+        calculateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (operator.equals("plus")){
+
+                    currentNumber = currentNumber + prevNumber;
+
+
+                }
+                else if (operator.equals("minus")){
+
+                    currentNumber =prevNumber -currentNumber ;
+
+
+
+                } else if (operator.equals("multiply")){
+
+                    currentNumber =currentNumber * prevNumber;
+
+
+                } else  if (operator.equals("divide")){
+
+                    currentNumber =prevNumber / currentNumber ;
+
+                }
+
+                midtermTxt.setText( " ");
+                resultTxt.setText(String.valueOf(currentNumber));
+
+//                    숫자를 띄우고 나서는 현재 입력값을 0 으로 초기화
+
+                currentNumber = 0;
+
+//                    연산자도 빈칸으로 초기화
+
+                operator = " ";
+            }
+        });
 
 
     }
@@ -97,6 +196,11 @@ public class Question04Activity extends BaseActivity {
     public void bindViews() {
 
 
+        this.calculateBtn = (Button) findViewById(R.id.calculateBtn);
+        this.divideBtn = (Button) findViewById(R.id.divideBtn);
+        this.multiplyBtn = (Button) findViewById(R.id.multiplyBtn);
+        this.minusBtn = (Button) findViewById(R.id.minusBtn);
+        this.plusBtn = (Button) findViewById(R.id.plusBtn);
         this.clearBtn = (Button) findViewById(R.id.clearBtn);
         this.nineBtn = (Button) findViewById(R.id.nineBtn);
         this.eightBtn = (Button) findViewById(R.id.eightBtn);
@@ -108,6 +212,7 @@ public class Question04Activity extends BaseActivity {
         this.twoBtn = (Button) findViewById(R.id.twoBtn);
         this.oneBtn = (Button) findViewById(R.id.oneBtn);
         this.resultTxt = (TextView) findViewById(R.id.resultTxt);
+        this.midtermTxt = (TextView) findViewById(R.id.midtermTxt);
 
     }
 }
